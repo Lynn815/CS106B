@@ -10,7 +10,6 @@
  * for creating an amazing testing harness!
  */
 
-#include "testing/SimpleTest.h"
 using namespace std;
 
 /*
