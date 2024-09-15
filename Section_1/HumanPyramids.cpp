@@ -10,6 +10,7 @@
  * for creating an amazing testing harness!
  */
 
+#include "testing/SimpleTest.h"
 using namespace std;
 
 /*
@@ -22,8 +23,12 @@ using namespace std;
  * supports their weight on the two people below them.
  */
 int peopleInPyramidOfHeight(int n) {
-    (void) n;
-    return 0;
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+    else
+        return peopleInPyramidOfHeight(n-1) + n;
 }
 
 /* * * * * Provided Tests Below This Point * * * * */
