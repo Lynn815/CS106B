@@ -2,6 +2,7 @@
 build/
 References/
 *.pro.user
-NameHash
+Assignment_0/NameHash
+Section_1/Section1
 !*.cpp
 !*.h
