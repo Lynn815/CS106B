@@ -1,2 +1,8 @@
 # CS106B
-[resources](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1214/)
+本仓库主要记录和备份斯坦福大学CS106B课程的Section和Assignment作业内容，课程内容参考[site](https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1214/).
+
+## Assignment
+[Assignment 0](./Assignment_0)
+
+## Section
+[Section 1](./Section_1)
