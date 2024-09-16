@@ -33,8 +33,18 @@ using namespace std;
  *
  */
 string randomShuffle(string input) {
-    (void) input;
-    return "";
+    if (input == "")
+        return "";
+    int nChars = input.length();
+    int remChar = randomInteger(0, nChars-1);
+    string newstr;
+    if (remChar == 0)
+        newstr = input.substr(1);
+    else if (remChar == nChars-1)
+        newstr = input.substr(0,nChars-1);
+    else
+        newstr = input.substr(0,remChar) + input.substr(remChar+1);
+    return input[remChar] + randomShuffle(newstr);
 }
 
 /* * * * * Provided Tests Below This Point * * * * */
