@@ -3,6 +3,7 @@
 
 ## Assignment
 [Assignment 0](./Assignment_0)
+[Assignment 1](./Assignment_1)
 
 ## Section
 [Section 1](./Section_1)
