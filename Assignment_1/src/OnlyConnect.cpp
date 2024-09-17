@@ -4,16 +4,34 @@
  *
  * TODO: Edit these comments to leave a puzzle for your section leader to solve!
  */
+#include <string>
 #include "OnlyConnect.h"
 #include "GUI/SimpleTest.h"
 using namespace std;
+
+bool isConsonants(char c) {
+    if ((c > 65 && c < 69) || (c > 69 && c < 73) || (c > 73 && c < 79) || (c > 79 && c < 85) || (c > 85 && c < 89) || c == 90)
+        return true;
+    return false;
+}
 
 string onlyConnectize(string phrase) {
     /* TODO: The next few lines just exist to make sure you don't get compiler warning messages
      * when this function isn't implemented. Delete these lines, then implement this function.
      */
-    (void) phrase;
-    return "";
+    char c = toupper(phrase[0]);
+    if (phrase.length() == 1) {
+        if (isConsonants(c)) {
+            string str(1, c);
+            return str;
+        } else
+            return "";
+    }
+    if (isConsonants(c)) {
+        string str(1, c);
+        return str + onlyConnectize(phrase.substr(1));
+    } else
+        return onlyConnectize(phrase.substr(1));
 }
 
 
@@ -53,6 +71,15 @@ PROVIDED_TEST("Handles single-character inputs.") {
  *
  * Happy testing!
  */
+
+STUDENT_TEST("") {
+    EXPECT_EQUAL(onlyConnectize("Elena Kagan"), "LNKGN");
+    EXPECT_EQUAL(onlyConnectize("Antonin Scalia"), "NTNNSCL");
+    EXPECT_EQUAL(onlyConnectize("EE 364A"), "");
+    EXPECT_EQUAL(onlyConnectize("For sale: baby shoes, never worn."), "FRSLBBSHSNVRWRN");
+    EXPECT_EQUAL(onlyConnectize("I'm the bad guy. (Duh!)"), "MTHBDGDH");
+    EXPECT_EQUAL(onlyConnectize("Annie Mae, My Sea Anemone Enemy!"), "NNMMSNMNNM");
+}
 
 
 
