@@ -6,8 +6,16 @@ using namespace std;
 Grid<bool> floodedRegionsIn(const Grid<double>& terrain,
                             const Vector<GridLocation>& sources,
                             double height) {
+    Grid<bool> ret(terrain.numRows(), terrain.numCols(), false);
     Queue<GridLocation> sourceQueue;
-
+    for (auto &water_s : sources) {
+        if (terrain[water_s.row][water_s.col] <= height)
+            sourceQueue.enqueue(water_s);
+    }
+    while (!sourceQueue.isEmpty()) {
+        auto curr_position = sourceQueue.dequeue();
+    }
+    return ret;
 }
 
 
