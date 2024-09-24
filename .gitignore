@@ -4,6 +4,7 @@ References/
 *.pro.user
 Assignment_0/NameHash
 Assignment_1/Welcome_to_CPP*
+Assignment_2/Fun*
 Section_1/Section1*
 !*.cpp
 !*.h
