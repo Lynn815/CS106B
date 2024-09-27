@@ -1,19 +1,47 @@
 #include "RisingTides.h"
 #include "GUI/SimpleTest.h"
 #include "queue.h"
+#include "set.h"
+#include "vector.h"
 using namespace std;
 
 Grid<bool> floodedRegionsIn(const Grid<double>& terrain,
                             const Vector<GridLocation>& sources,
                             double height) {
-    Grid<bool> ret(terrain.numRows(), terrain.numCols(), false);
+    int row_num = terrain.numRows();
+    int col_num = terrain.numCols();
+    Grid<bool> ret(row_num, col_num, false);
     Queue<GridLocation> sourceQueue;
+    Set<GridLocation> visited;
     for (auto &water_s : sources) {
-        if (terrain[water_s.row][water_s.col] <= height)
+        if (terrain[water_s.row][water_s.col] <= height) {
             sourceQueue.enqueue(water_s);
+            visited.add(water_s);
+            ret[water_s.row][water_s.col] = true;
+        }
     }
     while (!sourceQueue.isEmpty()) {
-        auto curr_position = sourceQueue.dequeue();
+        auto curr_pos = sourceQueue.dequeue();
+        Vector<GridLocation> vec_pos;
+        if (curr_pos.col - 1 >= 0) {
+            vec_pos.add(GridLocation(curr_pos.row, curr_pos.col - 1));
+        }
+        if (curr_pos.row - 1 >= 0) {
+            vec_pos.add(GridLocation(curr_pos.row - 1, curr_pos.col));
+        }
+        if (curr_pos.row + 1 < row_num) {
+            vec_pos.add(GridLocation(curr_pos.row + 1, curr_pos.col));
+        }
+        if (curr_pos.col + 1 < col_num) {
+            vec_pos.add(GridLocation(curr_pos.row, curr_pos.col + 1));
+        }
+        for (auto &new_pos : vec_pos) {
+            if (terrain[new_pos.row][new_pos.col] <= height && !visited.contains(new_pos)) {
+                sourceQueue.enqueue(new_pos);
+                visited.add(new_pos);
+                ret[new_pos.row][new_pos.col] = true;
+            }
+        }
     }
     return ret;
 }
