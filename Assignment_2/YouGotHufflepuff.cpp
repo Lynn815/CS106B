@@ -1,38 +1,112 @@
 #include "YouGotHufflepuff.h"
 #include "GUI/SimpleTest.h"
+#include <cmath>
+
 using namespace std;
 
 Question randomQuestionFrom(Set<Question>& questions) {
-    /* TODO: Delete this line and the next two, then implement this function. */
-    (void) questions;
-    return {};
+    if (questions.isEmpty()) {
+        error("the set of the questions is empty");
+    }
+    Question qst = randomElement(questions);
+    questions.remove(qst);
+    return qst;
 }
 
 Map<char, int> scoresFrom(const Map<Question, int>& answers) {
-    /* TODO: Delete this line and the next two, then implement this function. */
-    (void) answers;
-    return {};
+    Map<char, int> ret;
+    for (auto &qst : answers.keys()) {
+        switch (answers[qst]) {
+        case 5:
+            for (auto & f : qst.factors.keys()) {
+                if (ret.containsKey(f)) {
+                    ret[f] += 2 * qst.factors[f];
+                } else {
+                    ret.put(f, 2 * qst.factors[f]);
+                }
+            }
+            break;
+        case 4:
+            for (auto & f : qst.factors.keys()) {
+                if (ret.containsKey(f)) {
+                    ret[f] += qst.factors[f];
+                } else {
+                    ret.put(f, qst.factors[f]);
+                }
+            }
+            break;
+        case 3:
+            for (auto & f : qst.factors.keys()) {
+                if (!ret.containsKey(f)) {
+                    ret.put(f, 0);
+                }
+            }
+            break;
+        case 2:
+            for (auto & f : qst.factors.keys()) {
+                if (ret.containsKey(f)) {
+                    ret[f] += (-1) * qst.factors[f];
+                } else {
+                    ret.put(f, (-1) * qst.factors[f]);
+                }
+            }
+            break;
+        case 1:
+            for (auto & f : qst.factors.keys()) {
+                if (ret.containsKey(f)) {
+                    ret[f] += (-2) * qst.factors[f];
+                } else {
+                    ret.put(f, (-2) * qst.factors[f]);
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    return ret;
 }
 
 Map<char, double> normalize(const Map<char, int>& scores) {
-    /* TODO: Delete this line and the next two, then implement this function. */
-    (void) scores;
-    return {};
+    double sum = 0;
+    for (auto &f : scores.keys()) {
+        sum += scores[f] * scores[f];
+    }
+    sum = sqrt(sum);
+    if (!sum) {
+        error("All inputs are zero");
+    }
+    Map<char, double> ret;
+    for (auto &f : scores.keys()) {
+        ret.put(f, scores[f]/sum);
+    }
+    return ret;
 }
 
 double cosineSimilarityOf(const Map<char, double>& lhs,
                           const Map<char, double>& rhs) {
-    /* TODO: Delete this line and the next three, then implement this function. */
-    (void) lhs;
-    (void) rhs;
-    return {};
+    double sum = 0;
+    for (auto &f : lhs.keys()) {
+        if (rhs.containsKey(f)) {
+            sum += lhs[f] * rhs[f];
+        }
+    }
+    return sum;
 }
 
 Person mostSimilarTo(const Map<char, int>& scores, const Set<Person>& people) {
-    /* TODO: Delete this line and the next three, then implement this function. */
-    (void) scores;
-    (void) people;
-    return {};
+    if (people.isEmpty())
+        error("The set of people is empty");
+    double cos_sim = -1;
+    Person per;
+    for (auto &p : people) {
+        double curr = cosineSimilarityOf(normalize(scores), normalize(p.scores));
+        if (curr > cos_sim) {
+            per = p;
+            cos_sim = curr;
+        }
+    }
+    return per;
 }
 
 
