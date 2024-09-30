@@ -5,6 +5,8 @@
 - [Assignment 0](./Assignment_0)
 - [Assignment 1](./Assignment_1)
 - [Assignment 2](./Assignment_2)
+- [Assignment 3](./Assignment_3)
+- [Assignment 4](./Assignment_4)
 
 ## Section
 - [Section 1](./Section_1)
